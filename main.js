@@ -1,5 +1,6 @@
 const infoContainer = document.querySelector(".info-container");
-
+const locationSearch = document.querySelector(".search");
+const searchButton = document.querySelector(".btn");
 const weatherKey = {
   apiKey: "43d1cdcbbcfd014aa1d594023bc45648",
   fetchWeather: function (location) {
@@ -26,8 +27,20 @@ const weatherKey = {
       <div class="wind-speed">Wind speed:${data.wind.speed}Kmh</div>
     </div>`;
     infoContainer.insertAdjacentHTML("beforeend", html);
-    console.log(data);
   },
 };
 
-weatherKey.fetchWeather("london");
+searchButton.addEventListener("click", function () {
+  if (locationSearch.value === "") {
+    alert("No location has been inputed");
+  }
+
+  let counter = 0;
+  weatherKey.fetchWeather(locationSearch.value);
+  counter += 1;
+  if (counter > 0) {
+    infoContainer.replaceChildren();
+    counter = 0;
+  }
+  locationSearch.value = "";
+});
